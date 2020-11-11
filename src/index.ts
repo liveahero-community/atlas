@@ -90,7 +90,7 @@ const loadAltas = async (imagePath: string, jsonPath: string) => {
 };
 
 const main = async () => {
-  const atlasJsonPath = './artifacts/Monobehaviour';
+  const atlasJsonPath = './artifacts/MonoBehaviour';
   const texturePath = './artifacts/Texture2D';
   const files = await readdir(atlasJsonPath);
 
