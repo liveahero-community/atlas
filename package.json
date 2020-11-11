@@ -1,0 +1,24 @@
+{
+  "name": "lah-atlas",
+  "version": "0.1.0",
+  "repository": "https://github.com/liveahero-community/figures",
+  "author": "salmon",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "download:assets": "download-git-repo github:liveahero-community/archives#artifacts artifacts"
+  },
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "download-git-repo-cli": "^3.0.2",
+    "fs-extra": "^9.0.1",
+    "sharp": "^0.26.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.3",
+    "@types/node": "^14.14.7",
+    "@types/sharp": "^0.26.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  }
+}

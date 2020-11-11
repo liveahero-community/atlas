@@ -1,0 +1,45 @@
+name: download-and-run
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    name: Download and run
+    env:
+      MY_SECRET: ${{ secrets.commit_secret }}
+      USER_NAME: githubaction
+      USER_EMAIL: githubaction@fake.com
+      PUBLISH_DIR: ./output
+      GH_PAGES_BRANCH: gh-pages
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Installation
+        run: |
+          yarn install
+
+      - name: Download and run
+        run: |
+          yarn download:assets
+          yarn start
+
+      - name: Commit files
+        run: |
+          cd $PUBLISH_DIR
+          touch .nojekyll
+          git config --local user.name $USER_NAME
+          git config --local user.email $USER_EMAIL
+          git status
+          git add --all
+          git commit -m "update"
+          git push origin HEAD
+          echo "🤘 update version complete."
