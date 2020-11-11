@@ -95,12 +95,16 @@ const main = async () => {
   const files = await readdir(atlasJsonPath);
 
   for await (const file of files) {
-    const { 1: fileName } = file.match(/(\w+)\.json/);
+    const matches = file.match(/(fg_\w+)\.json/);
 
-    // arg 1: './Texture2D/fg_ryekie_h01_skin1_Atlas0.png'
-    // arg 2: './Monobehaviour/fg_ryekie_h01_skin1.json'
-    console.log(`[Start] ${atlasJsonPath}/${fileName}.json with ${texturePath}/${fileName}_Atlas0.png`);
-    await loadAltas(`${texturePath}/${fileName}_Atlas0.png`, `${atlasJsonPath}/${fileName}.json`);
+    if (matches) {
+      const { 1: fileName } = matches;
+  
+      // arg 1: './Texture2D/fg_ryekie_h01_skin1_Atlas0.png'
+      // arg 2: './Monobehaviour/fg_ryekie_h01_skin1.json'
+      console.log(`[Start] ${atlasJsonPath}/${fileName}.json with ${texturePath}/${fileName}_Atlas0.png`);
+      await loadAltas(`${texturePath}/${fileName}_Atlas0.png`, `${atlasJsonPath}/${fileName}.json`);
+    }
   }
 };
 
