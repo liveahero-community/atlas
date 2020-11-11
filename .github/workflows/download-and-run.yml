@@ -30,6 +30,7 @@ jobs:
       - name: Download and run
         run: |
           yarn download:assets
+          ls -al artifacts
           yarn start
 
       - name: Commit files
