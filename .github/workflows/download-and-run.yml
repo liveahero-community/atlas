@@ -1,6 +1,9 @@
 name: download-and-run
 
-on: [workflow_dispatch]
+on:
+  repository_dispatch:
+    types: [altas-update]
+  workflow_dispatch:
 
 jobs:
   build:
