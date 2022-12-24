@@ -22,7 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/output
+/output_raw
+/output_minified
 /artifacts
 /Texture2D
 /Monobehaviour

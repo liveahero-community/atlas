@@ -1,7 +1,7 @@
 // Node modules.
 import { readdir, readFile, mkdirp } from 'fs-extra';
-import * as sharp from 'sharp';
 import { createCanvas, Image } from 'canvas';
+import * as jimp from 'jimp';
 
 interface TextureData {
   name: string;
@@ -34,7 +34,7 @@ interface AtlasData {
 
 const loadAltas = async (imagePath: string, jsonPath: string) => {
   const raw = await readFile(jsonPath, 'utf-8');
-  const atlasData = JSON.parse(raw) as AtlasData;
+  const atlasData: AtlasData = JSON.parse(raw);
 
   atlasData.textureDataList.forEach(async (textureData) => {
     const image = new Image();
@@ -69,19 +69,23 @@ const loadAltas = async (imagePath: string, jsonPath: string) => {
       cropContext.clearRect(0, 0, textureData.width, textureData.height);
       cropContext.drawImage(canvas, 0, canvasWidth - canvasHeight, canvasHeight, canvasHeight, 0, 0, canvasWidth, canvasHeight);
 
-      const buffer = canvas.toBuffer('image/png');
-      await mkdirp('output');
-      const outputPath = `output/${textureData.name}.png`;
+      const outputDir = 'output_raw';
+      const buffer: Buffer = canvas.toBuffer('image/png');
+      await mkdirp(outputDir);
+      const outputPath = `${outputDir}/${textureData.name}.png`;
 
-      const sharpImage = sharp(buffer);
-      const { height } = (await sharpImage.metadata());
-      await sharpImage.extract({
-        width: textureData.width,
-        height: textureData.height,
-        left: 0,
-        top: height - textureData.height,
-      }).toFile(outputPath);
+      // remove padding of top and right
+      const jimpImage = await jimp.read(buffer);
 
+      jimpImage.crop(
+        0,
+        jimpImage.getHeight() - textureData.height,
+        textureData.width,
+        textureData.height,
+      );
+
+      // finish
+      await jimpImage.writeAsync(outputPath);
       console.log(`${textureData.name} done`);
     };
 

@@ -12,12 +12,12 @@ jobs:
       MY_SECRET: ${{ secrets.commit_secret }}
       USER_NAME: githubaction
       USER_EMAIL: githubaction@fake.com
-      PUBLISH_DIR: ./output
+      PUBLISH_DIR: ./output_minified
       GH_PAGES_BRANCH: gh-pages
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
 
@@ -35,6 +35,7 @@ jobs:
           yarn download:assets
           ls -al artifacts
           yarn start
+          yarn images:minify
 
       - name: Commit files
         run: |
