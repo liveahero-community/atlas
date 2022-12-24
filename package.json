@@ -6,15 +6,12 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "download:assets": "download-git-repo github:liveahero-community/archives#artifacts artifacts",
-    "images:minify": "imagemin output_raw/* --out-dir=output_minified --plugin.pngquant.quality=0.7 --plugin.pngquant.quality=0.9"
+    "download:assets": "download-git-repo github:liveahero-community/archives#artifacts artifacts"
   },
   "dependencies": {
     "canvas": "2.11.0",
     "download-git-repo-cli": "^3.0.2",
     "fs-extra": "^11.1.0",
-    "imagemin-cli": "^7.0.0",
-    "imagemin-pngquant": "^9.0.2",
     "jimp": "^0.16.2"
   },
   "devDependencies": {

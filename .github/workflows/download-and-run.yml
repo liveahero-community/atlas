@@ -35,7 +35,6 @@ jobs:
           yarn download:assets
           ls -al artifacts
           yarn start
-          yarn images:minify
 
       - name: Commit files
         run: |
