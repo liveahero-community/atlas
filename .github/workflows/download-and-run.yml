@@ -12,7 +12,7 @@ jobs:
       MY_SECRET: ${{ secrets.commit_secret }}
       USER_NAME: githubaction
       USER_EMAIL: githubaction@fake.com
-      PUBLISH_DIR: ./output_minified
+      PUBLISH_DIR: ./output_raw
       GH_PAGES_BRANCH: gh-pages
     runs-on: ubuntu-latest
     strategy:
