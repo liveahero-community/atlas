@@ -94,20 +94,23 @@ const loadAltas = async (imagePath: string, jsonPath: string) => {
 };
 
 const main = async () => {
-  const atlasJsonPath = './artifacts/MonoBehaviour';
-  const texturePath = './artifacts/Texture2D';
-  const files = await readdir(atlasJsonPath);
+  const atlasJsonDir = './artifacts/MonoBehaviour';
+  const textureDir = './artifacts/Texture2D';
+  const files = await readdir(atlasJsonDir);
 
-  for await (const file of files) {
+  for (const [index, file] of files.entries()) {
     const matches = file.match(/(fg_\w+)\.json/);
 
     if (matches) {
       const { 1: fileName } = matches;
   
       // arg 1: './Texture2D/fg_ryekie_h01_skin1_Atlas0.png'
+      const texturePath = `${textureDir}/${fileName}_Atlas0.png`;
       // arg 2: './Monobehaviour/fg_ryekie_h01_skin1.json'
-      console.log(`[Start] ${atlasJsonPath}/${fileName}.json with ${texturePath}/${fileName}_Atlas0.png`);
-      await loadAltas(`${texturePath}/${fileName}_Atlas0.png`, `${atlasJsonPath}/${fileName}.json`);
+      const atlasJsonPath = `${atlasJsonDir}/${fileName}.json`;
+
+      console.log(`[${index + 1} / ${files.length}] ${atlasJsonPath} with ${texturePath}`);
+      await loadAltas(texturePath, atlasJsonPath);
     }
   }
 };
