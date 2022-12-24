@@ -86,7 +86,7 @@ const loadAltas = async (imagePath: string, jsonPath: string) => {
 
       // finish
       await jimpImage.writeAsync(outputPath);
-      console.log(`${textureData.name} done`);
+      console.log(`\t${textureData.name} is done`);
     };
 
     image.src = imagePath;
@@ -98,7 +98,8 @@ const main = async () => {
   const textureDir = './artifacts/Texture2D';
   const files = await readdir(atlasJsonDir);
 
-  for (const [index, file] of files.entries()) {
+  for (const file of files) {
+    const index = files.indexOf(file) + 1;
     const matches = file.match(/(fg_\w+)\.json/);
 
     if (matches) {
@@ -109,7 +110,7 @@ const main = async () => {
       // arg 2: './Monobehaviour/fg_ryekie_h01_skin1.json'
       const atlasJsonPath = `${atlasJsonDir}/${fileName}.json`;
 
-      console.log(`[${index + 1} / ${files.length}] ${atlasJsonPath} with ${texturePath}`);
+      console.log(`[${index} / ${files.length}] ${atlasJsonPath} with ${texturePath}`);
       await loadAltas(texturePath, atlasJsonPath);
     }
   }
