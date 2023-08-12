@@ -49,5 +49,5 @@ jobs:
           git config --global user.name ${{ env.USER_NAME }}
           git config --global user.email ${{ env.USER_EMAIL }}
           git add --all
-          git commit -m "Update atlas images"
+          git diff-index --quiet HEAD || git commit -m "Update atlas images"
           git push origin HEAD
